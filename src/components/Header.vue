@@ -1,12 +1,23 @@
 <script setup>
+import { computed } from 'vue'
+
 const props = defineProps({
     carrito: {
         type: Array,
         required: true
+    }, 
+    total:{
+        type:Number,
+        required:true
+    },
+    guitarra:{
+        type:Object,
+        required:true
     }
 })
 
-defineEmits(['agrega-uno', 'quita-uno'])
+
+defineEmits(['agrega-uno', 'quita-uno', 'quitar-carrito', 'vacia-carrito'])
 </script>
 <template>
     <header class="py-5 header">
@@ -69,6 +80,7 @@ defineEmits(['agrega-uno', 'quita-uno'])
                                             <button
                                                 class="btn btn-danger"
                                                 type="button"
+                                                @click="$emit('quitar-carrito', guitarra.id)"
                                             >
                                                 X
                                             </button>
@@ -77,8 +89,8 @@ defineEmits(['agrega-uno', 'quita-uno'])
                                 </tbody>
                             </table>
 
-                            <p class="text-end">Total pagar: <span class="fw-bold">$899</span></p>
-                            <button class="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
+                            <p class="text-end">Total pagar: <span class="fw-bold">${{ total }}</span></p>
+                            <button @click="$emit('vacia-carrito', id)" class="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
                             </div>
                         </div>
                     </div>
@@ -87,10 +99,11 @@ defineEmits(['agrega-uno', 'quita-uno'])
 
             <div class="row mt-5">
                 <div class="col-md-6 text-center text-md-start pt-5">
-                    <h1 class="display-2 fw-bold">Modelo VAI</h1>
-                    <p class="mt-5 fs-5 text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, possimus quibusdam dolor nemo velit quo, fuga omnis, iure molestias optio tempore sint at ipsa dolorum odio exercitationem eos inventore odit.</p>
-                    <p class="text-primary fs-1 fw-black">$399</p>
+                    <h1 class="display-2 fw-bold">{{ guitarra.nombre }}</h1>
+                    <p class="mt-5 fs-5 text-white">{{ guitarra.descripcion }}</p>
+                    <p class="text-primary fs-1 fw-black">{{ guitarra.precio }}</p>
                     <button 
+                    @click="$emit('agregar-carrito', guitarra)"
                         type="button"
                         class="btn fs-4 bg-primary text-white py-2 px-5"
                     >Agregar al Carrito</button>
