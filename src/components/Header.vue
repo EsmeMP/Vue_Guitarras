@@ -115,5 +115,4 @@ defineEmits(['agrega-uno', 'quita-uno', 'quitar-carrito', 'vacia-carrito'])
     </header>
 </template>
 <style scoped>
-  
 </style>
